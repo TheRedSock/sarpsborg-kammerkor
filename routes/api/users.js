@@ -41,7 +41,8 @@ router.post('/register', (req, res) => {
         // Create new user
         const newUser = new User({
           username: req.body.username,
-          password: req.body.password
+          password: req.body.password,
+          permissions: ['user']
         });
 
         // Encrypt the password
@@ -82,6 +83,12 @@ router.post('/login', (req, res) => {
     if (!user) {
       errors.username = 'Brukeren finnes ikke.';
       return res.status(404).json(errors);
+    }
+
+    // Check if user has permission
+    if (user.permissions.indexOf('user') !== 1) {
+      errors.permissions = 'Denne brukeren er ikke autorisert for denne siden.';
+      return res.status(400).json(errors);
     }
 
     // Check if password is correct
@@ -127,7 +134,8 @@ router.get(
   (req, res) => {
     res.json({
       id: req.user.id,
-      username: req.user.username
+      username: req.user.username,
+      permissions: req.user.permissions
     });
   }
 );
