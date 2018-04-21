@@ -25,12 +25,12 @@ module.exports = function validateRegisterInput(data) {
 
   //#region Password validations
   // String length validation
-  if (!Validator.isLength(data.confirm, { min: 6, max: 30 })) {
+  if (!Validator.isLength(data.password, { min: 6, max: 30 })) {
     errors.confirm = 'Passord må være mellom 6 og 30 karakterer.';
   }
 
-  if (Validator.isEmpty(data.confirm)) {
-    errors.confirm = 'Passord felt må fylles ut.';
+  if (Validator.isEmpty(data.password)) {
+    errors.password = 'Passord felt må fylles ut.';
   }
   //#endregion
 

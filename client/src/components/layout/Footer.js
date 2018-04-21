@@ -3,7 +3,7 @@ import {} from 'reactstrap';
 
 export default () => {
   return (
-    <footer className="page-footer font-small">
+    <footer className="footer page-footer font-small">
       <div className="py-3 text-center bg-secondary text-white">
         Copyright &copy; {new Date().getFullYear()} Sarpsborg Kammerkor
       </div>

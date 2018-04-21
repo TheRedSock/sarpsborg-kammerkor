@@ -73,6 +73,11 @@ router.post('/login', (req, res) => {
   // Deconstruct return values from input validation on the request data.
   const { errors, isValid } = validateLoginInput(req.body);
 
+  // Check validation
+  if (!isValid) {
+    return res.status(400).json(errors);
+  }
+
   // Grab login info from request body.
   const username = req.body.username;
   const password = req.body.password;
