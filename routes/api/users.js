@@ -40,7 +40,7 @@ router.post('/register', (req, res) => {
       } else {
         // Create new user
         const newUser = new User({
-          username: req.body.username,
+          username: req.body.username.toLowerCase(),
           password: req.body.password,
           permissions: ['user']
         });
@@ -79,7 +79,7 @@ router.post('/login', (req, res) => {
   }
 
   // Grab login info from request body.
-  const username = req.body.username;
+  const username = req.body.username.toLowerCase();
   const password = req.body.password;
 
   // Find user by username
@@ -91,7 +91,8 @@ router.post('/login', (req, res) => {
     }
 
     // Check if user has permission
-    if (user.permissions.indexOf('user') !== 1) {
+    console.log(user.permissions.indexOf('user'));
+    if (user.permissions.indexOf('user') === -1) {
       errors.permissions = 'Denne brukeren er ikke autorisert for denne siden.';
       return res.status(400).json(errors);
     }
