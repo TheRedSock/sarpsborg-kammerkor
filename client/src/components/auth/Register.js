@@ -36,8 +36,6 @@ class Register extends Component {
       .post('/api/users/register', newUser)
       .then(res => console.log(res.data))
       .catch(err => this.setState({ errors: err.response.data }));
-
-    //this.props.registerUser(newUser, this.props.history);
   }
 
   render() {

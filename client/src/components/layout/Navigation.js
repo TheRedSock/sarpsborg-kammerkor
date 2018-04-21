@@ -29,7 +29,7 @@ class Navigation extends Component {
   render() {
     return (
       <div>
-        <Navbar color="faded" light className="navbar-expand-sm">
+        <Navbar color="faded" dark className="navbar-expand-sm bg-dark">
           <NavbarBrand tag={Link} to="/">
             Sarpsborg Kammerkor
           </NavbarBrand>
