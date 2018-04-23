@@ -91,7 +91,6 @@ router.post('/login', (req, res) => {
     }
 
     // Check if user has permission
-    console.log(user.permissions.indexOf('user'));
     if (user.permissions.indexOf('user') === -1) {
       errors.permissions = 'Denne brukeren er ikke autorisert for denne siden.';
       return res.status(400).json(errors);

@@ -42,7 +42,7 @@ class Navigation extends Component {
     const userLinks = (
       <Nav className="ml-auto" navbar>
         <NavItem>
-          <NavLink tag={Link} to="/intern/registrering">
+          <NavLink tag={Link} to="/admin/registrering">
             Registrer Bruker
           </NavLink>
         </NavItem>
