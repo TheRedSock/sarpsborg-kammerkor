@@ -4,6 +4,8 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const passport = require('passport');
 const keys = require('../../config/keys');
+const acl = require('../../config/acl');
+const authorize = require('../../utils/authorize');
 //#endregion
 
 // Initialize router
@@ -137,11 +139,21 @@ router.get(
   '/current',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    res.json({
-      id: req.user.id,
-      username: req.user.username,
-      permissions: req.user.permissions
-    });
+    authorize(req, acl)
+      .then(result => {
+        if (result) {
+          res.json({
+            id: req.user.id,
+            username: req.user.username,
+            permissions: req.user.permissions
+          });
+        } else {
+          res.status(401).json({ auth: 'Unauthorized' });
+        }
+      })
+      .catch(err => {
+        res.json({ error: 'Something went wrong.' });
+      });
   }
 );
 //#endregion

@@ -5,10 +5,6 @@ const bodyParser = require('body-parser');
 const passport = require('passport');
 //#endregion
 
-//#region Route files
-const users = require('./routes/api/users');
-//#endregion
-
 // Define express app
 const app = express();
 
@@ -19,27 +15,39 @@ const db = require('./config/keys').mongoURI;
 // Connect to MongoDB
 mongoose
   .connect(db)
-  .then(() => console.log('MongoDB Connected.'))
+  .then(() => {
+    console.log('MongoDB Connected.');
+    let acl = require('./config/acl');
+    app.emit('ready');
+  })
   .catch(err => console.log(err));
 //#endregion
 
-//#region Body parser middleware
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
-//#endregion
+app.on('ready', () => {
+  //#region Route files
+  const users = require('./routes/api/users');
+  const practices = require('./routes/api/practices');
+  //#endregion
 
-//#region Passport middleware
-app.use(passport.initialize());
+  //#region Body parser middleware
+  app.use(bodyParser.urlencoded({ extended: false }));
+  app.use(bodyParser.json());
+  //#endregion
 
-// Passport config
-require('./config/passport')(passport);
-//#endregion
+  //#region Passport middleware
+  app.use(passport.initialize());
 
-//#region Use Routes
-app.use('/api/users', users);
-//#endregion
+  // Passport config
+  require('./config/passport')(passport);
+  //#endregion
 
-//#region Start server
-const port = process.env.PORT || 5000;
-app.listen(port, () => console.log(`Server running on port ${port}.`));
-//#endregion
+  //#region Use Routes
+  app.use('/api/users', users);
+  app.use('/api/practices', practices);
+  //#endregion
+
+  //#region Start server
+  const port = process.env.PORT || 5000;
+  app.listen(port, () => console.log(`Server running on port ${port}.`));
+  //#endregion
+});
