@@ -1,33 +1,31 @@
+//#region Dependency imports
 const node_acl = require('acl');
 const mongoose = require('mongoose');
+//#endregion
 
+// Set up MongoDB backend for ACL.
 let aclBackend = new node_acl.mongodbBackend(
   mongoose.connection.db,
   'acl',
   true
 );
+// Initialize ACL.
 let acl = new node_acl(aclBackend);
+
+// Setup initial roles.
 setRoles();
 
 function setRoles() {
-  // Create access roles
-  acl.allow('user', 'intern', 'view');
-  acl.allow('admin', 'admin', '*');
-  acl.allow('test', '/current', '*');
-  // Add users to roles
-  acl.addUserRoles('sarpsborg', 'user');
-  acl.addUserRoles('theredsock', 'admin');
-  acl.addUserRoles('5adb9bbc0a2efc18ec89aa6b', 'test');
-  // Create hierarchy
-  acl.addRoleParents('admin', 'user');
-
-  acl.isAllowed('5adb9bbc0a2efc18ec89aa6b', '/current', 'get', (err, res) => {
-    if (res) {
-      console.log('IS allowed');
-    } else {
-      console.log('not allowed');
+  // Allow admin role to do everything in the API.
+  acl.allow([
+    {
+      roles: ['admin'],
+      allows: [{ resources: 'api', permissions: '*' }]
     }
-  });
+  ]);
+
+  // Initial user that has full API access.
+  acl.addUserRoles('5ada599252cd8628f8fd5f63', 'admin');
 }
 
 module.exports = acl;

@@ -17,12 +17,15 @@ mongoose
   .connect(db)
   .then(() => {
     console.log('MongoDB Connected.');
+    // Configure ACL after database connected.
     let acl = require('./config/acl');
+    // Tell the app it's ready to continue setting up the server.
     app.emit('ready');
   })
   .catch(err => console.log(err));
 //#endregion
 
+// Continue setting up the server after database has loaded.
 app.on('ready', () => {
   //#region Route files
   const users = require('./routes/api/users');

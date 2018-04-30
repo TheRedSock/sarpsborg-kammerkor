@@ -14,9 +14,9 @@ const UserSchema = new Schema({
     type: String,
     required: true
   },
-  permissions: {
-    type: [String],
-    required: true
+  admin: {
+    type: Boolean,
+    default: false
   }
 });
 //#endregion
