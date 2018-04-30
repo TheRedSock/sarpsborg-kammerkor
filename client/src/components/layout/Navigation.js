@@ -36,23 +36,8 @@ class Navigation extends Component {
     });
   }
 
-  render() {
-    const { isAuthenticated } = this.props.auth;
-
-    const userLinks = (
-      <Nav className="ml-auto" navbar>
-        <NavItem>
-          <NavLink tag={Link} to="/admin/registrering">
-            Registrer Bruker
-          </NavLink>
-        </NavItem>
-        <NavItem>
-          <NavLink tag={Link} to="#!" onClick={this.onLogoutClick.bind(this)}>
-            Logg ut
-          </NavLink>
-        </NavItem>
-      </Nav>
-    );
+  returnNavLinks() {
+    const { isAuthenticated, user } = this.props.auth;
 
     const guestLinks = (
       <Nav className="ml-auto" navbar>
@@ -69,6 +54,42 @@ class Navigation extends Component {
       </Nav>
     );
 
+    const userLinks = (
+      <Nav className="ml-auto" navbar>
+        <NavItem>
+          <NavLink tag={Link} to="/intern/semesterplan">
+            Semesterplan
+          </NavLink>
+        </NavItem>
+        <NavItem>
+          <NavLink tag={Link} to="#!" onClick={this.onLogoutClick.bind(this)}>
+            Logg ut
+          </NavLink>
+        </NavItem>
+      </Nav>
+    );
+
+    const adminLinks = (
+      <Nav className="ml-auto" navbar>
+        <NavItem>
+          <NavLink tag={Link} to="/admin/dashbord">
+            Administrative Sider
+          </NavLink>
+        </NavItem>
+        {userLinks}
+      </Nav>
+    );
+
+    if (user.admin) {
+      return adminLinks;
+    } else if (isAuthenticated) {
+      return userLinks;
+    } else {
+      return guestLinks;
+    }
+  }
+
+  render() {
     return (
       <div>
         <Navbar color="faded" dark className="navbar-expand-sm bg-dark">
@@ -77,7 +98,7 @@ class Navigation extends Component {
           </NavbarBrand>
           <NavbarToggler onClick={this.toggleNavbar} />
           <Collapse isOpen={this.state.collapsed} navbar>
-            {isAuthenticated ? userLinks : guestLinks}
+            {this.returnNavLinks()}
           </Collapse>
         </Navbar>
       </div>

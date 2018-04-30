@@ -73,7 +73,8 @@ router.post(
           })
           .catch(err => console.log(errors));
       } else {
-        errors.unauthorized = 'Bruker ikke autorisert.';
+        errors.unauthorized =
+          'Din bruker har ikke rettigheter til denne operasjonen.';
         return res.status(401).json(errors);
       }
     });

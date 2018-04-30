@@ -22,7 +22,7 @@ class Register extends Component {
   }
 
   componentDidMount() {
-    if (!this.props.auth.isAdmin) {
+    if (!this.props.auth.user.admin) {
       if (this.props.auth.isAuthenticated) {
         this.props.history.push('/intern/hjem');
       } else {
