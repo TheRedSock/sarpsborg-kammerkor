@@ -1,3 +1,11 @@
 // Export type constants
 export const GET_ERRORS = 'GET_ERRORS';
+
 export const SET_CURRENT_USER = 'SET_CURRENT_USER';
+
+export const GET_UPCOMING = 'GET_UPCOMING';
+export const UPCOMING_LOADING = 'UPCOMING_LOADING';
+export const UPCOMING_NOT_FOUND = 'UPCOMING_NOT_FOUND';
+export const CLEAR_CURRENT_UPCOMING = 'CLEAR_CURRENT_UPCOMING';
+
+export const GET_PRACTICES = 'GET_PRACTICES';

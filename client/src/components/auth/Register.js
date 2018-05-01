@@ -2,10 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
-import classnames from 'classnames';
-import { Row, Col, Form, FormGroup, Input } from 'reactstrap';
+import { Row, Col, Form, Input } from 'reactstrap';
 
 import { registerUser } from '../../actions/authActions';
+import TextFieldGroup from '../common/TextFieldGroup';
 
 class Register extends Component {
   constructor() {
@@ -68,51 +68,29 @@ class Register extends Component {
                 Lag en bruker for Sarpsborg Kammerkor's interne sider.
               </p>
               <Form onSubmit={this.onSubmit}>
-                <FormGroup>
-                  <Input
-                    type="text"
-                    className={classnames('form-control form-control-lg', {
-                      'is-invalid': errors.username
-                    })}
-                    placeholder="Brukernavn"
-                    name="username"
-                    value={this.state.username}
-                    onChange={this.onChange}
-                  />
-                  {errors.username && (
-                    <div className="invalid-feedback">{errors.username}</div>
-                  )}
-                </FormGroup>
-                <FormGroup>
-                  <Input
-                    type="password"
-                    className={classnames('form-control form-control-lg', {
-                      'is-invalid': errors.password
-                    })}
-                    placeholder="Passord"
-                    name="password"
-                    value={this.state.password}
-                    onChange={this.onChange}
-                  />
-                  {errors.password && (
-                    <div className="invalid-feedback">{errors.password}</div>
-                  )}
-                </FormGroup>
-                <FormGroup>
-                  <Input
-                    type="password"
-                    className={classnames('form-control form-control-lg', {
-                      'is-invalid': errors.confirm
-                    })}
-                    placeholder="Bekreft Passord"
-                    name="confirm"
-                    value={this.state.confirm}
-                    onChange={this.onChange}
-                  />
-                  {errors.confirm && (
-                    <div className="invalid-feedback">{errors.confirm}</div>
-                  )}
-                </FormGroup>
+                <TextFieldGroup
+                  placeholder="Brukernavn"
+                  name="username"
+                  value={this.state.username}
+                  onChange={this.onChange}
+                  error={errors.username}
+                />
+                <TextFieldGroup
+                  type="password"
+                  placeholder="Passord"
+                  name="password"
+                  value={this.state.password}
+                  onChange={this.onChange}
+                  error={errors.password}
+                />
+                <TextFieldGroup
+                  type="password"
+                  placeholder="Bekreft Passord"
+                  name="password"
+                  value={this.state.confirm}
+                  onChange={this.onChange}
+                  error={errors.confirm}
+                />
                 <Input
                   type="submit"
                   className="btn btn-info btn-block mt-4"

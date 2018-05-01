@@ -16,13 +16,42 @@ const router = express.Router();
 
 //#region Load input validation
 const isEmpty = require('../../validation/is-empty');
-//TODO: Server-side input validation.
+const validatePracticeInput = require('../../validation/practice');
 //#endregion
 
 // Load 'Practice' model
 const Practice = require('../../models/Practice');
 
 //#region / routes
+// @route  GET api/practices
+// @desc   Gets 10 upcoming practices
+// @access Private
+router.get(
+  '/',
+  passport.authenticate('jwt', { session: false }),
+  (req, res) => {
+    const errors = {};
+    // Find up to 10 practices starting from current date sorted by date.
+    Practice.find({
+      from: {
+        $gte: new Date().toISOString()
+      }
+    })
+      .sort({ from: 1 })
+      .limit(10)
+      .then(practices => {
+        // If there are no upcoming practices.
+        if (isEmpty(practices)) {
+          errors.nopractice = 'Det er ingen oppkommende øvelser.';
+          return res.status(400).json(errors);
+        }
+        // Return list of (up to 10) practices.
+        return res.json(practices);
+      })
+      .catch(err => res.status(400).json(err));
+  }
+);
+
 // @route  POST api/practices
 // @desc   Creates a practice
 // @access Private
@@ -30,7 +59,14 @@ router.post(
   '/',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const errors = {};
+    // Deconstruct return values from input validation on the request data.
+    const { errors, isValid } = validatePracticeInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     authorize(req, acl).then(result => {
       if (result) {
         const practiceFields = {};
@@ -60,7 +96,14 @@ router.put(
   '/:practice_id',
   passport.authenticate('jwt', { session: false }),
   (req, res) => {
-    const errors = {};
+    // Deconstruct return values from input validation on the request data.
+    const { errors, isValid } = validatePracticeInput(req.body);
+
+    // Check validation
+    if (!isValid) {
+      return res.status(400).json(errors);
+    }
+
     authorize(req, acl).then(result => {
       if (result) {
         const practiceFields = {};

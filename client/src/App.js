@@ -13,9 +13,12 @@ import store from './store';
 import Navigation from './components/layout/Navigation';
 import Footer from './components/layout/Footer';
 import Landing from './components/layout/Landing';
+
 import Login from './components/auth/Login';
 import Register from './components/auth/Register';
+import Dashboard from './components/internal/Dashboard';
 
+import { clearCurrentUpcoming } from './actions/practiceActions';
 // Custom CSS
 import './App.css';
 
@@ -35,6 +38,7 @@ if (localStorage.jwtToken) {
   if (decoded.exp < currentTime) {
     // Logout user
     store.dispatch(logoutUser());
+    store.dispatch(clearCurrentUpcoming());
 
     // Redirect to login
     window.location.href = '/logg-inn';
@@ -51,6 +55,7 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <div className="container">
               <Route exact path="/logg-inn" component={Login} />
+              <Route exact path="/intern/hjem" component={Dashboard} />
               <Route exact path="/admin/registrering" component={Register} />
             </div>
             <Footer />

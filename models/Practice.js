@@ -10,13 +10,13 @@ const PracticeSchema = new Schema({
     type: String,
     required: true
   },
-  to: {
-    type: Date,
-    default: Date.now()
-  },
   from: {
     type: Date,
-    default: Date.now()
+    default: Date.now
+  },
+  to: {
+    type: Date,
+    default: Date.now
   },
   information: {
     type: String

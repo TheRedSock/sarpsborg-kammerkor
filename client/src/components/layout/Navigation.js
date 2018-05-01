@@ -13,6 +13,7 @@ import {
 } from 'reactstrap';
 
 import { logoutUser } from '../../actions/authActions';
+import { clearCurrentUpcoming } from '../../actions/practiceActions';
 
 class Navigation extends Component {
   constructor() {
@@ -26,6 +27,7 @@ class Navigation extends Component {
 
   onLogoutClick(e) {
     e.preventDefault();
+    this.props.clearCurrentUpcoming();
     this.props.logoutUser();
     window.location.href = '/logg-inn';
   }
@@ -115,4 +117,6 @@ const mapStateToProps = state => ({
   auth: state.auth
 });
 
-export default connect(mapStateToProps, { logoutUser })(Navigation);
+export default connect(mapStateToProps, { logoutUser, clearCurrentUpcoming })(
+  Navigation
+);
