@@ -94,7 +94,7 @@ class Navigation extends Component {
   render() {
     return (
       <div>
-        <Navbar color="faded" dark className="navbar-expand-sm bg-dark">
+        <Navbar color="faded" dark className="navbar-expand-sm bg-primary">
           <NavbarBrand tag={Link} to="/">
             Sarpsborg Kammerkor
           </NavbarBrand>

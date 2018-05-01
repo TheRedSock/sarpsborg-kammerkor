@@ -25,8 +25,6 @@ class Register extends Component {
     if (!this.props.auth.user.admin) {
       if (this.props.auth.isAuthenticated) {
         this.props.history.push('/intern/hjem');
-      } else {
-        this.props.history.push('/logg-inn');
       }
     }
   }

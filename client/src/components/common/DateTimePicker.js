@@ -1,25 +1,27 @@
 import React from 'react';
 import classnames from 'classnames';
 import PropTypes from 'prop-types';
-import { FormGroup, Input } from 'reactstrap';
+import { FormGroup } from 'reactstrap';
 
-const TextFieldGroup = ({
+import DateTime from 'react-datetime';
+import 'react-datetime/css/react-datetime.css';
+
+require('moment/locale/nb');
+
+const DateTimePicker = ({
   name,
+  defaultValue,
   placeholder,
   value,
-  defaultValue,
   label,
   error,
   info,
-  type,
   onChange,
   disabled
 }) => {
   return (
     <FormGroup>
-      <Input
-        defaultValue={defaultValue}
-        type={type}
+      <DateTime
         className={classnames('form-control form-control-lg', {
           'is-invalid': error
         })}
@@ -28,6 +30,7 @@ const TextFieldGroup = ({
         value={value}
         onChange={onChange}
         disabled={disabled}
+        defaultValue={defaultValue}
       />
       {info && <small className="form-text text-muted">{info}</small>}
       {error && <div className="invalid-feedback">{error}</div>}
@@ -35,20 +38,15 @@ const TextFieldGroup = ({
   );
 };
 
-TextFieldGroup.propTypes = {
-  name: PropTypes.string.isRequired,
+DateTimePicker.propTypes = {
+  name: PropTypes.string,
+  defaultValue: PropTypes.instanceOf(Date),
   placeholder: PropTypes.string,
-  value: PropTypes.string.isRequired,
-  defaultValue: PropTypes.string,
+  value: PropTypes.instanceOf(Date),
   info: PropTypes.string,
   error: PropTypes.string,
-  type: PropTypes.string.isRequired,
-  onChange: PropTypes.func.isRequired,
+  onChange: PropTypes.func,
   disabled: PropTypes.string
 };
 
-TextFieldGroup.defaultProps = {
-  type: 'text'
-};
-
-export default TextFieldGroup;
+export default DateTimePicker;

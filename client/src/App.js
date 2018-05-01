@@ -1,6 +1,6 @@
 // Dependency imports
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import jwt_decode from 'jwt-decode';
 
@@ -8,6 +8,8 @@ import jwt_decode from 'jwt-decode';
 import { setCurrentUser, logoutUser } from './actions/authActions';
 import setAuthToken from './utils/setAuthToken';
 import store from './store';
+
+import PrivateRoute from './components/common/PrivateRoute';
 
 // Website component imports
 import Navigation from './components/layout/Navigation';
@@ -19,8 +21,10 @@ import Register from './components/auth/Register';
 import Dashboard from './components/internal/Dashboard';
 
 import { clearCurrentUpcoming } from './actions/practiceActions';
+
 // Custom CSS
 import './App.css';
+import Schedule from './components/internal/Schedule';
 
 // Check for token
 if (localStorage.jwtToken) {
@@ -55,8 +59,23 @@ class App extends Component {
             <Route exact path="/" component={Landing} />
             <div className="container">
               <Route exact path="/logg-inn" component={Login} />
-              <Route exact path="/intern/hjem" component={Dashboard} />
-              <Route exact path="/admin/registrering" component={Register} />
+              <Switch>
+                <PrivateRoute exact path="/intern/hjem" component={Dashboard} />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/intern/semesterplan"
+                  component={Schedule}
+                />
+              </Switch>
+              <Switch>
+                <PrivateRoute
+                  exact
+                  path="/admin/registrering"
+                  component={Register}
+                />
+              </Switch>
             </div>
             <Footer />
           </div>
