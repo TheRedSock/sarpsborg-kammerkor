@@ -42,7 +42,8 @@ DateTimePicker.propTypes = {
   name: PropTypes.string,
   defaultValue: PropTypes.instanceOf(Date),
   placeholder: PropTypes.string,
-  value: PropTypes.instanceOf(Date),
+  value: PropTypes.oneOfType([PropTypes.instanceOf(Date), PropTypes.string])
+    .isRequired,
   info: PropTypes.string,
   error: PropTypes.string,
   onChange: PropTypes.func,

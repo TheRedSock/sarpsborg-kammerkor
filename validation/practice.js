@@ -17,7 +17,7 @@ module.exports = function validatePracticeInput(data) {
 
   // TODO: combobox validation?
   if (Validator.isEmpty(data.tag)) {
-    errors.tag = 'Type felt må fylles ut.';
+    errors.tag = 'Du må velge en øvelses type.';
   }
   //#endregion
 
@@ -41,7 +41,7 @@ module.exports = function validatePracticeInput(data) {
 
   //#region To validations
   if (Validator.isBefore(data.to, data.from)) {
-    errors.from = 'Til dato må være senere enn fra dato.';
+    errors.to = 'Til dato må være senere enn fra dato.';
   }
 
   if (Validator.isBefore(data.to, new Date().toISOString())) {
@@ -54,12 +54,6 @@ module.exports = function validatePracticeInput(data) {
 
   if (Validator.isEmpty(data.to)) {
     errors.to = 'Fra dato felt må fylles ut';
-  }
-  //#endregion
-
-  //#region Information validations
-  if (Validator.isEmpty(data.information)) {
-    errors.information = 'Informasjon felt må fylles ut';
   }
   //#endregion
 

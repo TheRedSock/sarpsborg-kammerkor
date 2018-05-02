@@ -30,6 +30,19 @@ export const getUpcomingPractices = () => dispatch => {
     });
 };
 
+// Create practice
+export const createPractice = (profileData, history) => dispatch => {
+  axios
+    .post('/api/practices', profileData)
+    .then(res => history.push('/intern/semesterplan'))
+    .catch(err =>
+      dispatch({
+        type: GET_ERRORS,
+        payload: err.response.data
+      })
+    );
+};
+
 // Practice loading
 export const setUpcomingLoading = () => {
   return {
