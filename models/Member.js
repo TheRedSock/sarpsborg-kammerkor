@@ -19,7 +19,7 @@ const MemberSchema = new Schema({
     required: true
   },
   age: {
-    type: number
+    type: Number
   },
   image: {
     type: String

@@ -49,6 +49,11 @@ class Navigation extends Component {
           </NavLink>
         </NavItem>
         <NavItem>
+          <NavLink tag={Link} to="/medlemmer">
+            Medlemmer
+          </NavLink>
+        </NavItem>
+        <NavItem>
           <NavLink tag={Link} to="/logg-inn">
             Interne Sider
           </NavLink>

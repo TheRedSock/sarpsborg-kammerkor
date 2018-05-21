@@ -30,6 +30,7 @@ app.on('ready', () => {
   //#region Route files
   const users = require('./routes/api/users');
   const practices = require('./routes/api/practices');
+  const members = require('./routes/api/members');
   //#endregion
 
   //#region Body parser middleware
@@ -47,6 +48,7 @@ app.on('ready', () => {
   //#region Use Routes
   app.use('/api/users', users);
   app.use('/api/practices', practices);
+  app.use('/api/members', members);
   //#endregion
 
   //#region Start server
