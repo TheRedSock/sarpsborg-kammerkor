@@ -1,5 +1,5 @@
-This is a website developed for Sarpsborg Kammerkor (Sarpsborg Chamber Choir).  
-(Still under development, will add URL link when deployed.)
+This is an experimental website developed for Sarpsborg Kammerkor (Not a paid job, just for fun and experience).  
+(Still under development and on hold at the moment, will add URL link if it gets deployed.)
 
 ## Technologies
 
